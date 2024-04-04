@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2024/04/03 10:34:43.000.156,=rtl.dcp</Transaction>
+    <Transaction>2024/04/03 10:34:55.000.006,=W:\DARKY FOUNDATION\BUNKER\Twitter\Sources\Twitter.pas</Transaction>
+    <Transaction>2024/04/03 10:35:12.000.458,W:\DARKY FOUNDATION\BUNKER\Twitter\Sources\TwitterBot.pas=W:\DARKY FOUNDATION\BUNKER\Twitter\Sources\Twitter.pas</Transaction>
+    <Transaction>2024/04/03 10:35:34.000.172,W:\DARKY FOUNDATION\BUNKER\Twitter\Packages\TwitterBot.pas=W:\DARKY FOUNDATION\BUNKER\Twitter\Sources\TwitterBot.pas</Transaction>
+    <Transaction>2024/04/03 10:40:52.000.879,W:\DARKY FOUNDATION\BUNKER\Twitter\Sources\TwitterBot.pas=W:\DARKY FOUNDATION\BUNKER\Twitter\Packages\TwitterBot.pas</Transaction>
+    <Transaction>2024/04/03 10:42:22.000.814,=W:\DARKY FOUNDATION\BUNKER\Twitter\Sources\Twitter.Api.Types.pas</Transaction>
+    <Transaction>2024/04/03 10:42:30.000.274,=W:\DARKY FOUNDATION\BUNKER\Twitter\Sources\Twitter.Core.pas</Transaction>
+    <Transaction>2024/04/03 10:58:00.000.024,=fmx.dcp</Transaction>
+    <Transaction>2024/04/03 11:03:56.000.103,W:\DARKY FOUNDATION\BUNKER\Twitter\Sources\TwitterClient.pas=W:\DARKY FOUNDATION\BUNKER\Twitter\Sources\TwitterBot.pas</Transaction>
+    <Transaction>2024/04/03 11:18:35.000.191,W:\DARKY FOUNDATION\BUNKER\Twitter\Sources\Twitter.Client.pas=W:\DARKY FOUNDATION\BUNKER\Twitter\Sources\TwitterClient.pas</Transaction>
+    <Transaction>2024/04/03 21:44:27.000.815,=IndyProtocols.dcp</Transaction>
+    <Transaction>2024/04/03 21:44:27.000.848,=IndyCore.dcp</Transaction>
+    <Transaction>2024/04/03 21:44:27.000.784,=IndySystem.dcp</Transaction>
+    <Transaction>2024/04/04 00:14:12.000.015,=RESTComponents.dcp</Transaction>
+    <Transaction>2024/04/04 03:18:21.000.603,=W:\DARKY FOUNDATION\BUNKER\Twitter\Assets\logo.jpg</Transaction>
+    <Transaction>2024/04/04 03:21:59.000.896,=W:\DARKY FOUNDATION\BUNKER\Twitter\Assets\Twitter_logo.bmp</Transaction>
+    <Transaction>2024/04/04 03:21:59.000.848,W:\DARKY FOUNDATION\BUNKER\Twitter\Assets\logo.jpg=</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="..\..\Twitter"/>
+    <File Path="..\Assets"/>
+    <File Path="..\Assets\Twitter_logo.bmp"/>
+    <File Path="..\Sources"/>
+    <File Path="..\Sources\Twitter.Api.Types.pas"/>
+    <File Path="..\Sources\Twitter.Client.pas"/>
+    <File Path="..\Sources\Twitter.Core.pas"/>
+    <File Path="fmx.dcp"/>
+    <File Path="IndyCore.dcp"/>
+    <File Path="IndyProtocols.dcp"/>
+    <File Path="IndySystem.dcp"/>
+    <File Path="RESTComponents.dcp"/>
+    <File Path="rtl.dcp"/>
+  </ProjectSortOrder>
+</BorlandProject>
