@@ -1,4 +1,4 @@
-# Twitter Component v1.0.0
+# Delphi Twitter Component v1.0.0
 
 ## Introduction
 This is a Delphi Component for interacting with Twitter API. It provides a set of functions to perform various actions.
