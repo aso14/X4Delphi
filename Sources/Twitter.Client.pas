@@ -6,7 +6,6 @@ uses
   System.SysUtils, System.Classes, Twitter.Core, Twitter.Api.Types,
   Json, REST.Json,System.Net.Mime,FMX.Dialogs ;
 
-
 type
 
   TTwitter = class(TComponent)
@@ -66,7 +65,6 @@ var
   LBody    : TStringStream;
   LJsonObj : TJSONObject;
 begin
-  result   := nil;
   LBody    := TStringStream.Create('');
   LJsonObj := TJSONObject.Create;
   try
@@ -93,6 +91,7 @@ var
   tmpResp  : TTwitterMediaInfo;
 begin
   result := '';
+  tmpResp := TTwitterMediaInfo.Create;
   LParam := TMultipartFormData.Create;
   LParam.AddFile('media',AMedia);
   var LResponse := POST_FILE(LUrlM,'POST',LParam);
@@ -125,7 +124,6 @@ function TTwitter.DeleteTweet(AId: string): TTweetRespDeleted;
 const
   LUrl = 'https://api.twitter.com/2/tweets/';
 begin
-  result := nil;
   var tmpUrl := LUrl+AId;
   try
   result := DELETE(tmpUrl);
