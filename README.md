@@ -47,7 +47,7 @@ You need to create a developers account :
 ### CreateTweet
 This function allows you to create a tweet on Twitter.
 ```delphi
- var Resp := Twitter1.CreateTweet('Hello, Twitter!');
+var Resp := Twitter1.CreateTweet('Hello, Twitter!');
 ```
 
 ### DeleteTweet
