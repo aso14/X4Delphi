@@ -1,4 +1,6 @@
-# Twitter Component v1.0.0
+# Delphi Twitter Component v1.0.0
+
+![alt text](https://github.com/aso14/Delphi-Twitter/blob/master/Assets/Twitter_logo_24.bmp)
 
 ## Introduction
 This is a Delphi Component for interacting with Twitter API. It provides a set of functions to perform various actions.
