@@ -7,7 +7,7 @@ This is a Delphi Component for interacting with Twitter API. It provides a set o
 
 - **Compatibility:** VCL, FMX
 - **Tested on Delphi:** 11 Alexandria CE
-- **Version:** 1.1.0 
+- **Version:** 1.0.0 
 - **Developer:** Silas AÏKO 
 
 ## Getting Started
