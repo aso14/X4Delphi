@@ -1,9 +1,13 @@
-# Delphi Twitter Component v1.0.0
+# X4Delphi Component v 1.1.0
 
 ![alt text](https://github.com/aso14/Delphi-Twitter/blob/master/Assets/logo_01.jpg)
 
+## New Update 1.1.0 
+- You can now Sign with Twitter easily !       
+![alt text](https://cdn.cms-twdigitalassets.com/content/dam/developer-twitter/auth-docs/sign-in-with-twitter-gray.png.twimg.1920.png)
+
 ## Introduction
-This is a Delphi Component for interacting with Twitter API. It provides a set of functions to perform various actions.
+This is a Delphi Component for interacting with  X ( Twitter ) API. It provides a set of functions to perform various actions.
 
 - **Compatibility:** VCL, FMX
 - **Tested on Delphi:** 11 Alexandria CE
@@ -32,11 +36,12 @@ To use this component in your Delphi project, follow these steps:
 #
 #
 
-| Function                   | Description                                          | Example Usage
+| Procedure / Function                   | Description                                          | Example Usage
 |-----------------------------|------------------------------------------------------|--------------
-| **CreateTweet**                   | This function allows you to create a tweet on Twitter. Simply provide the text you want to tweet, and it returns a response object (TTweetResponse) containing relevant information about the tweet. | `Resp := Twitter1.CreateTweet('Hello, Twitter!');`
-| **DeleteTweet**                  | With this function, you can delete a tweet from Twitter by providing its ID (AId). It returns a response object (TTweetRespDeleted) indicating the success or failure of the deletion operation.| ` Resp := Twitter1.DeleteTweet(Resp.data.id);`
-| **CreateTweetWithContent**             | This function enables you to create a tweet with both text and media content (such as images or videos). | `Twitter1.CreateTweetWithContent('AText','Images_videos_path');`
+| **CreateTweet**                   | This procedure allows you to create a tweet on Twitter. Simply provide the text you want to tweet, and it returns a response through **OnAuthenticated** Event containing relevant information about the tweet. | `Twitter1.CreateTweet('Hello, Twitter!');`
+| **DeleteTweet**                  | With this function, you can delete a tweet from Twitter by providing its ID (AId). It returns a response object (TTweetRespDeleted) indicating the success or failure of the deletion operation.| ` Resp := Twitter1.DeleteTweet(TweetId);`
+| **CreateTweetWithContent**             | This procedure enables you to create a tweet with both text and media content (such as images or videos). | `Twitter1.CreateTweetWithContent('AText','Images_videos_path');`
+| **SignIn**             | This procedure enables you to use Log in with Twitter based on OAuth | `Twitter1.SignIn;`
 
 ## Examples for Available Functions
 
@@ -47,9 +52,16 @@ You need to create a developers account :
 - Access Token; Bearer Token; Consumer Key; Consumer Secret; Token Secret; 
 
 ### CreateTweet
-This function allows you to create a tweet on Twitter.
+This procedure allows you to create a tweet on Twitter.
 ```delphi
-var Resp := Twitter1.CreateTweet('Hello, Twitter!');
+Twitter1.CreateTweet('Hello, Twitter!');
+```
+Event : OnTweetSent
+```delphi
+procedure TForm1.Twitter1TweetSent(ATweetId, ATweet: string);
+begin
+// Write your code here.....
+end;
 ```
 
 ### DeleteTweet
@@ -59,9 +71,28 @@ var Resp := Twitter1.DeleteTweet(Resp.data.id);
 ```
 
 ### CreateTweetWithContent
-This function enables you to create a tweet with both text and media content (such as images or videos).
+This procedure enables you to create a tweet with both text and media content (such as images or videos).
 ```delphi
-var Resp := Twitter1.CreateTweetWithContent('AText','Images_videos_path');
+Twitter1.CreateTweetWithContent('AText','Images_videos_path');
+```
+Event : OnTweetSentWithContent
+```delphi
+procedure TForm1.Twitter1TweetSentWithContent(ATweetMediaId: string);
+begin
+// Write your code here.....
+end;
+```
+### SignIn
+Log in with Twitter.
+```delphi
+Twitter1.SignIn;
+```
+Event : OnAuthenticated
+```delphi
+procedure TForm1.Twitter1Authenticated(AIsAuth: Boolean);
+begin
+ // Write your code here.....
+end;
 ```
 
 ## License
