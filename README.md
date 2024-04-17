@@ -47,8 +47,7 @@ To use this component in your Delphi project, follow these steps:
 
 ### Set up your Twitter Developer account
 You need to create a developers account :
-- How Create a developers account : https://developer.twitter.com/en/portal/dashboard
-  You need to create a developers account :
+- How Create a developers account : https://developer.twitter.com/en/portal/dashboard  You need to create a developers account :
 - Access Token; Bearer Token; Consumer Key; Consumer Secret; Token Secret; 
 
 ### CreateTweet
