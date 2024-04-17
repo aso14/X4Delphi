@@ -66,7 +66,7 @@ end;
 ### DeleteTweet
 With this function, you can delete a tweet from Twitter by providing its ID (AId).
 ```delphi
-var Resp := Twitter1.DeleteTweet(Resp.data.id);
+var Resp := Twitter1.DeleteTweet(ATweetId);
 ```
 
 ### CreateTweetWithContent
