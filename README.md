@@ -48,9 +48,16 @@ You need to create a developers account :
 - Access Token; Bearer Token; Consumer Key; Consumer Secret; Token Secret; 
 
 ### CreateTweet
-This function allows you to create a tweet on Twitter.
+This procedure allows you to create a tweet on Twitter.
 ```delphi
-var Resp := Twitter1.CreateTweet('Hello, Twitter!');
+Twitter1.CreateTweet('Hello, Twitter!');
+```
+Event : OnTweetSent
+```delphi
+procedure TForm1.Twitter1TweetSent(ATweetId, ATweet: string);
+begin
+ ShowMessage(ATweetId+ ' __  '+ATweet);
+end;
 ```
 
 ### DeleteTweet
@@ -60,9 +67,28 @@ var Resp := Twitter1.DeleteTweet(Resp.data.id);
 ```
 
 ### CreateTweetWithContent
-This function enables you to create a tweet with both text and media content (such as images or videos).
+This procedure enables you to create a tweet with both text and media content (such as images or videos).
 ```delphi
-var Resp := Twitter1.CreateTweetWithContent('AText','Images_videos_path');
+Twitter1.CreateTweetWithContent('AText','Images_videos_path');
+```
+Event : OnTweetSentWithContent
+```delphi
+procedure TForm1.Twitter1TweetSentWithContent(ATweetMediaId: string);
+begin
+ ShowMessage(ATweetMediaId);
+end;
+```
+### SignIn
+Log in with Twitter.
+```delphi
+Twitter1.SignIn;
+```
+Event : OnAuthenticated
+```delphi
+procedure TForm1.Twitter1Authenticated(AIsAuth: Boolean);
+begin
+
+end;
 ```
 
 ## License
