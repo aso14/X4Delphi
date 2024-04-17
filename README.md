@@ -1,5 +1,8 @@
 # X4Delphi Component v 1.1.0
 
+
+Telegram Group : ![alt text](https://t.me/x4delphi)
+
 ![alt text](Assets/logo_01_g.png)
 
 ## New Update 1.1.0 
