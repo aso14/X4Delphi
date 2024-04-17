@@ -33,8 +33,6 @@ To use this component in your Delphi project, follow these steps:
 2. Compile and install the package `Twitter.bpl`. This step may involve right-clicking on the project file and selecting "Compile" and then "Install."
 
 ## Available Functions
-#
-#
 
 | Procedure / Function                   | Description                                          | Example Usage
 |-----------------------------|------------------------------------------------------|--------------
