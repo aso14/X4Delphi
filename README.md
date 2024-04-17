@@ -1,9 +1,9 @@
-# X4Delphi Component v1.1.0
+# X4Delphi Component v 1.1.0
 
 ![alt text](https://github.com/aso14/Delphi-Twitter/blob/master/Assets/logo_01.jpg)
 
 ## New Update 1.1.0 
-- You can now Sign with Twitter easily !  
+- You can now Sign with Twitter easily !       
 ![alt text](https://cdn.cms-twdigitalassets.com/content/dam/developer-twitter/auth-docs/sign-in-with-twitter-gray.png.twimg.1920.png)
 
 ## Introduction
