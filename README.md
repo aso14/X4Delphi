@@ -3,7 +3,7 @@
 ![alt text](https://github.com/aso14/Delphi-Twitter/blob/master/Assets/logo_01.jpg)
 
 ## Introduction
-This is a Delphi Component for interacting with  X (Twitter) API. It provides a set of functions to perform various actions.
+This is a Delphi Component for interacting with  X ( Twitter ) API. It provides a set of functions to perform various actions.
 
 - **Compatibility:** VCL, FMX
 - **Tested on Delphi:** 11 Alexandria CE
@@ -32,11 +32,12 @@ To use this component in your Delphi project, follow these steps:
 #
 #
 
-| Function                   | Description                                          | Example Usage
+| Procedure / Function                   | Description                                          | Example Usage
 |-----------------------------|------------------------------------------------------|--------------
 | **CreateTweet**                   | This procedure allows you to create a tweet on Twitter. Simply provide the text you want to tweet, and it returns a response through **OnAuthenticated** Event containing relevant information about the tweet. | `Twitter1.CreateTweet('Hello, Twitter!');`
-| **DeleteTweet**                  | With this function, you can delete a tweet from Twitter by providing its ID (AId). It returns a response object (TTweetRespDeleted) indicating the success or failure of the deletion operation.| ` Resp := Twitter1.DeleteTweet(Resp.data.id);`
-| **CreateTweetWithContent**             | This function enables you to create a tweet with both text and media content (such as images or videos). | `Twitter1.CreateTweetWithContent('AText','Images_videos_path');`
+| **DeleteTweet**                  | With this function, you can delete a tweet from Twitter by providing its ID (AId). It returns a response object (TTweetRespDeleted) indicating the success or failure of the deletion operation.| ` Resp := Twitter1.DeleteTweet(TweetId);`
+| **CreateTweetWithContent**             | This procedure enables you to create a tweet with both text and media content (such as images or videos). | `Twitter1.CreateTweetWithContent('AText','Images_videos_path');`
+| **SignIn**             | This procedure enables you to use Log in with Twitter based on OAuth | `Twitter1.SignIn;`
 
 ## Examples for Available Functions
 
