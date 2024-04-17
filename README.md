@@ -4,7 +4,7 @@
 
 ## New Update 1.1.0 
 - You can now Sign with Twitter easily !
-- https://cdn.cms-twdigitalassets.com/content/dam/developer-twitter/auth-docs/sign-in-with-twitter-gray.png.twimg.1920.png
+![alt text](https://cdn.cms-twdigitalassets.com/content/dam/developer-twitter/auth-docs/sign-in-with-twitter-gray.png.twimg.1920.png)
 
 ## Introduction
 This is a Delphi Component for interacting with  X ( Twitter ) API. It provides a set of functions to perform various actions.
