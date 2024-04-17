@@ -1,9 +1,9 @@
-# X (TWitter) Component v1..0
+# X4Delphi Component v1.1.0
 
 ![alt text](https://github.com/aso14/Delphi-Twitter/blob/master/Assets/logo_01.jpg)
 
 ## New Update 1.1.0 
-- You can now Sign with Twitter easily !
+- You can now Sign with Twitter easily !  
 ![alt text](https://cdn.cms-twdigitalassets.com/content/dam/developer-twitter/auth-docs/sign-in-with-twitter-gray.png.twimg.1920.png)
 
 ## Introduction
@@ -60,7 +60,6 @@ Event : OnTweetSent
 ```delphi
 procedure TForm1.Twitter1TweetSent(ATweetId, ATweet: string);
 begin
- ShowMessage(ATweetId+ ' __  '+ATweet);
 // Write your code here.....
 end;
 ```
@@ -80,7 +79,6 @@ Event : OnTweetSentWithContent
 ```delphi
 procedure TForm1.Twitter1TweetSentWithContent(ATweetMediaId: string);
 begin
- ShowMessage(ATweetMediaId);
 // Write your code here.....
 end;
 ```
