@@ -40,7 +40,6 @@ function POST_FILE(AUrl:String; AMethod: String; AParams:TMultipartFormData):Str
 
 var
   ClientBase    : TNetHTTPClient;
-
   LRespToken    : TTwitterSign;
   User          : TTwitterCredentials;
 

@@ -73,8 +73,6 @@ type
 
     function DeleteTweet(AId: string): TTweetRespDeleted;
 
-
-
   published
 
     property ConsumerKey    : String  read FConsumerKey      write SetConsumerKey;

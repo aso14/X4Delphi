@@ -36,17 +36,6 @@ type
 
 {Standard v1.1}
 
-//TTwitterProfilGeo = class
-//  private
-//  Fcountry : string;
-//  Fcountry_code : string;
-//  Flocality : string;
-//  Fregion : string;
-//  Fsub_region : string;
-//  Ffull_name : string;
-//  Fgeo :
-//end;
-
 TCoordinates = record
   Longitude: Double;
   Latitude: Double;
@@ -493,9 +482,6 @@ TTwitterImageInfo = class
    _UserID        : string;
    _ScreenName    : string;
   end;
-
-
-
 
 implementation
 
