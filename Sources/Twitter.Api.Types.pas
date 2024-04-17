@@ -6,11 +6,11 @@
   *                                                                             *
   *   Description:                                                              *
   *   This Delphi library provides functionality for interacting with the       *
-  *   Twitter (X) API v1 and v2.                                                          *
+  *   Twitter (X) API v1 and v2.                                                *
   *                                                                             *
   *   Compatibility: VCL, FMX                                                   *
   *   Tested on Delphi: 11 Alexandria  CE                                       *
-  *   Version: 1.0.0                                                            *
+  *   Version: 1.1.0                                                            *
   *                                                                             *
   *   License: MIT License (See LICENSE file for details)                       *
   *                                                                             *
@@ -22,6 +22,15 @@ unit Twitter.Api.Types;
 interface
 uses
   System.Generics.Collections;
+
+const
+  LUrlAuth     = 'https://api.twitter.com/oauth/request_token';
+  LRedirect    = 'https://api.twitter.com/oauth/authorize';
+  LUrl         = 'https://api.twitter.com/2/tweets';
+  LUrlM        = 'https://upload.twitter.com/1.1/media/upload.json';
+  LCallBackURI = 'http://localhost:3000/auth/twitter/callback';
+  LtmpUrl      = 'https://api.twitter.com/oauth/access_token';
+  ADefault     = 3000;
 
 type
 
@@ -466,6 +475,23 @@ TTwitterImageInfo = class
     Fdata: TTweetDataDelete;
   public
     property data: TTweetDataDelete read Fdata write Fdata;
+  end;
+
+  TTwitterSign  = record
+    oauth_token,
+    oauth_token_secret,
+    oauth_verifier : string;
+    oauth_callbackcf :Boolean;
+  end;
+
+  TTwitterCredentials = record
+   _ConsumerKey   : string;
+   _ConsumerSecret: string;
+   _AccessToken   : string;
+   _TokenSecret   : string;
+   _BearerToken   : string;
+   _UserID        : string;
+   _ScreenName    : string;
   end;
 
 

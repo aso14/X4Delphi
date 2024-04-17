@@ -6,11 +6,11 @@
   *                                                                             *
   *   Description:                                                              *
   *   This Delphi library provides functionality for interacting with the       *
-  *   Twitter (X) API v1 and v2.                                                          *
+  *   Twitter (X) API v1 and v2.                                                *
   *                                                                             *
   *   Compatibility: VCL, FMX                                                   *
   *   Tested on Delphi: 11 Alexandria  CE                                       *
-  *   Version: 1.0.0                                                            *
+  *   Version: 1.1.0                                                            *
   *                                                                             *
   *   License: MIT License (See LICENSE file for details)                       *
   *                                                                             *
@@ -25,32 +25,40 @@ uses
   System.SysUtils, System.Classes,FMX.Dialogs,System.JSON,System.Net.Mime,
   System.Net.HttpClientComponent, System.Net.HttpClient, System.NetEncoding,
   System.DateUtils,IdGlobal, IdCoderMIME, System.Hash, REST.Json,
-  Twitter.Api.Types ;
+  Twitter.Api.Types,System.Rtti;
 
 
 procedure CloseTwitterClient;
 
-function DELETE(AUrl:String):TTweetRespDeleted;
-function POST(AMethod:String; AUrl:String; AParams:TStringStream): String;
+function  URLEncode(source:string):string;
+function  URLContains(const URL: string): Boolean;
+
+
+function DELETE(AUrl:String): TTweetRespDeleted;
+function POST(AMethod:String; AUrl:String; AParams:TStringStream;AHeadParams:TStringList=nil): String;
 function POST_FILE(AUrl:String; AMethod: String; AParams:TMultipartFormData):String;
 
 var
   ClientBase    : TNetHTTPClient;
- _ConsumerKey   : string;
- _ConsumerSecret: string;
- _AccessToken   : string;
- _TokenSecret   : string;
- _BearerToken   : string;
+
+  LRespToken    : TTwitterSign;
+  User          : TTwitterCredentials;
 
 implementation
 
 function URLEncode(source:string):string;
- var i:integer;
- begin
-   result := '';
-   for i := 1 to length(source) do
-   if not (source[i] in ['A'..'Z','a'..'z','0','1'..'9','-','_','~','.']) then result := result + '%'+inttohex(ord(source[i]),2) else result := result + source[i];
-end;
+var
+  i: Integer;
+begin
+  Result := '';
+  for i := 1 to Length(source) do
+  begin
+    if not CharInSet(source[i], ['A'..'Z', 'a'..'z', '0'..'9', '-', '_', '~', '.']) then
+      Result := Result + '%' + IntToHex(Ord(source[i]), 2)
+    else
+      Result := Result + source[i];
+  end;
+ end;
 
 function GenerateNonce:string ;
 var
@@ -92,7 +100,7 @@ begin
     end;
 end;
 
-function TwitterOAuth1(AURL, AMethod: string): Boolean;
+function TwitterOAuth1(AURL, AMethod: string;AParams: TStringList=nil): Boolean;
 var
   OAuthParam: TStringList;
 begin
@@ -102,13 +110,15 @@ begin
 
     // Initialize OAuth parameter list
     OAuthParam := TStringList.Create;
+
     try
-      OAuthParam.Values['oauth_consumer_key']     := _ConsumerKey;
-      OAuthParam.Values['oauth_token']            := _AccessToken;
+      OAuthParam.Values['oauth_consumer_key']     := User._ConsumerKey;
+      OAuthParam.Values['oauth_token']            := User._AccessToken;
       OAuthParam.Values['oauth_signature_method'] := 'HMAC-SHA1';
       OAuthParam.Values['oauth_timestamp']        := IntToStr(DateTimeToUnix(Now));
       OAuthParam.Values['oauth_nonce']            := GenerateNonce;
       OAuthParam.Values['oauth_version']          := '1.0';
+      if (AParams<>nil) then OAuthParam.AddStrings(AParams);
       OAuthParam.Sort;
 
       // Collect Parameters
@@ -117,7 +127,7 @@ begin
         tmpParms.AddStrings(OAuthParam);
 
         for var I := 0 to tmpParms.Count - 1 do
-          tmpParms.ValueFromIndex[I] := URLEncode(tmpParms.ValueFromIndex[I]);
+        tmpParms.ValueFromIndex[I] := URLEncode(tmpParms.ValueFromIndex[I]);
         tmpParms.Sort;
 
         var ParamString := CollectParams(tmpParms);
@@ -127,7 +137,7 @@ begin
           [AMethod, URLEncode(AURL), URLEncode(ParamString)]);
 
         // Getting a signing key
-        var SignatureKey := Format('%s&%s', [URLEncode(_ConsumerSecret), URLEncode(_TokenSecret)]);
+        var SignatureKey := Format('%s&%s', [URLEncode(User._ConsumerSecret), URLEncode(User._TokenSecret)]);
 
         // Calculating the signature
         var tmpSignature := THashSHA1.GetHMACAsBytes(SignatureBaseString, SignatureKey);
@@ -139,6 +149,7 @@ begin
 
         // Build OAuth Header
         var Header := BuildHeader(OAuthParam);
+
 
         // Add the new header to ClientBase
         ClientBase.CustHeaders.Add('Authorization', Header);
@@ -166,16 +177,16 @@ begin
 end;
 
 
-function POST(AMethod:String; AUrl:String; AParams:TStringStream): String;
+function POST(AMethod:String;AUrl:String;AParams:TStringStream;AHeadParams:TStringList=nil): String;
 begin
    Result := EmptyStr;
-   TwitterOAuth1(AURL, AMethod);
+   TwitterOAuth1(AUrl, AMethod,AHeadParams);
    try
     Result := ClientBase.Post(AUrl,AParams).ContentAsString(TEncoding.UTF8);
    except
      on E : ENetHTTPClientException do
       begin
-        ShowMessage('Error TNetHTTPClient : ' + E.Message);
+        ShowMessage('Error: ' + E.Message);
       end;
    end;
 end;
@@ -190,7 +201,7 @@ begin
    except
      on E : ENetHTTPClientException do
       begin
-        ShowMessage('Error TNetHTTPClient : ' + E.Message);
+        ShowMessage('Error: ' + E.Message);
       end;
    end;
    ClientBase.ContentType := 'application/json';
@@ -207,13 +218,19 @@ begin
    except
      on E : ENetHTTPClientException do
       begin
-        ShowMessage('Error TNetHTTPClient : ' + E.Message);
+        ShowMessage('Error: ' + E.Message);
       end;
    end;
+end;
+
+
+function URLContains(const URL: string): Boolean;
+begin
+  Result := Pos('denied=', URL) > 0;
 end;
 
 initialization
   ClientBase := TNetHTTPClient.Create(nil);
   ClientBase.ContentType  := 'x-www-form-urlencoded';
-
 end.
+
