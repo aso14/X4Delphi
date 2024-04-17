@@ -2,6 +2,10 @@
 
 ![alt text](https://github.com/aso14/Delphi-Twitter/blob/master/Assets/logo_01.jpg)
 
+## New Update 1.1.0 
+- You can now Sign with Twitter easily !
+- https://cdn.cms-twdigitalassets.com/content/dam/developer-twitter/auth-docs/sign-in-with-twitter-gray.png.twimg.1920.png
+
 ## Introduction
 This is a Delphi Component for interacting with  X ( Twitter ) API. It provides a set of functions to perform various actions.
 
@@ -57,6 +61,7 @@ Event : OnTweetSent
 procedure TForm1.Twitter1TweetSent(ATweetId, ATweet: string);
 begin
  ShowMessage(ATweetId+ ' __  '+ATweet);
+// Write your code here.....
 end;
 ```
 
@@ -76,6 +81,7 @@ Event : OnTweetSentWithContent
 procedure TForm1.Twitter1TweetSentWithContent(ATweetMediaId: string);
 begin
  ShowMessage(ATweetMediaId);
+// Write your code here.....
 end;
 ```
 ### SignIn
@@ -87,7 +93,7 @@ Event : OnAuthenticated
 ```delphi
 procedure TForm1.Twitter1Authenticated(AIsAuth: Boolean);
 begin
-
+ // Write your code here.....
 end;
 ```
 
