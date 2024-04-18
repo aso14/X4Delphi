@@ -183,7 +183,7 @@ function TTwitter.DeleteTweet(AId: string): Boolean;
 begin
   var tmpUrl := LUrl+'/'+AId;
   try
-  result := DELETE(tmpUrl);
+    result := DELETE(tmpUrl);
    except
     raise Exception.Create('Error Message');
   end;

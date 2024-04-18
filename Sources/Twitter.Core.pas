@@ -212,9 +212,10 @@ begin
    try
     TwitterOAuth1(AURL,'DELETE');
     var tmp  := ClientBase.Delete(AUrl).ContentAsString(TEncoding.UTF8);
-    ShowMessage(tmp);
     var LObj := TJSON.JsonToObject<TTweetRespDeleted>
     (tmp,[joIgnoreEmptyArrays,joIgnoreEmptyStrings]);
+
+    if LObj.data.deleted then result := True;
 
    except
      on E : ENetHTTPClientException do
