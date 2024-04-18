@@ -44,6 +44,10 @@ To use this component in your Delphi project, follow these steps:
 | **CreateTweetWithContent**             | This procedure enables you to create a tweet with both text and media content (such as images or videos). | `Twitter1.CreateTweetWithContent('AText','Images_videos_path');`
 | **SignIn**             | This procedure enables you to use Log in with Twitter based on OAuth | `Twitter1.SignIn;`
 
+## CallBack URL 
+
+http://localhost:3000/auth/twitter/callback
+
 ## Examples for Available Functions
 
 ### Set up your Twitter Developer account
