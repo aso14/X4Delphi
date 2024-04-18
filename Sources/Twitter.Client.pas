@@ -71,7 +71,7 @@ type
     procedure CreateTweetWithContent(AText: String; AMedia:String);
     procedure SignIn;
 
-    function DeleteTweet(AId: string): TTweetRespDeleted;
+    function DeleteTweet(AId: string): Boolean;
 
   published
 
@@ -179,9 +179,9 @@ begin
    end;
 end;
 
-function TTwitter.DeleteTweet(AId: string): TTweetRespDeleted;
+function TTwitter.DeleteTweet(AId: string): Boolean;
 begin
-  var tmpUrl := LUrl+AId;
+  var tmpUrl := LUrl+'/'+AId;
   try
   result := DELETE(tmpUrl);
    except

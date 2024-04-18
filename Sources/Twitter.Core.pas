@@ -34,7 +34,7 @@ function  URLEncode(source:string):string;
 function  URLContains(const URL: string): Boolean;
 
 
-function DELETE(AUrl:String): TTweetRespDeleted;
+function DELETE(AUrl:String): Boolean;
 function POST(AMethod:String; AUrl:String; AParams:TStringStream;AHeadParams:TStringList=nil): String;
 function POST_FILE(AUrl:String; AMethod: String; AParams:TMultipartFormData):String;
 
@@ -206,14 +206,16 @@ begin
    ClientBase.ContentType := 'application/json';
 end;
 
-function DELETE(AUrl:String):TTweetRespDeleted;
+function DELETE(AUrl:String):Boolean;
 begin
-   Result := nil;
+   Result := false;
    try
     TwitterOAuth1(AURL,'DELETE');
-    var tmp := ClientBase.Delete(AUrl).ContentAsString(TEncoding.UTF8);
-    Result  := TJSON.JsonToObject<TTweetRespDeleted>
+    var tmp  := ClientBase.Delete(AUrl).ContentAsString(TEncoding.UTF8);
+    ShowMessage(tmp);
+    var LObj := TJSON.JsonToObject<TTweetRespDeleted>
     (tmp,[joIgnoreEmptyArrays,joIgnoreEmptyStrings]);
+
    except
      on E : ENetHTTPClientException do
       begin
