@@ -1,6 +1,9 @@
 # X4Delphi Component v 1.1.0
 
-![alt text]([https://github.com/aso14/X4Delphi/blob/master/Assets/logo_01_g.jpg)
+
+Telegram Group : https://t.me/x4delphi
+
+![alt text](Assets/logo_01_g.png)
 
 ## New Update 1.1.0 
 - You can now Sign with Twitter easily !       
@@ -33,8 +36,6 @@ To use this component in your Delphi project, follow these steps:
 2. Compile and install the package `Twitter.bpl`. This step may involve right-clicking on the project file and selecting "Compile" and then "Install."
 
 ## Available Functions
-#
-#
 
 | Procedure / Function                   | Description                                          | Example Usage
 |-----------------------------|------------------------------------------------------|--------------
@@ -43,12 +44,15 @@ To use this component in your Delphi project, follow these steps:
 | **CreateTweetWithContent**             | This procedure enables you to create a tweet with both text and media content (such as images or videos). | `Twitter1.CreateTweetWithContent('AText','Images_videos_path');`
 | **SignIn**             | This procedure enables you to use Log in with Twitter based on OAuth | `Twitter1.SignIn;`
 
+## CallBack URL 
+
+http://localhost:3000/auth/twitter/callback
+
 ## Examples for Available Functions
 
 ### Set up your Twitter Developer account
 You need to create a developers account :
-- How Create a developers account : https://developer.twitter.com/en/portal/dashboard
-  You need to create a developers account :
+- How Create a developers account : https://developer.twitter.com/en/portal/dashboard  You need to create a developers account :
 - Access Token; Bearer Token; Consumer Key; Consumer Secret; Token Secret; 
 
 ### CreateTweet
@@ -67,7 +71,7 @@ end;
 ### DeleteTweet
 With this function, you can delete a tweet from Twitter by providing its ID (AId).
 ```delphi
-var Resp := Twitter1.DeleteTweet(Resp.data.id);
+var Resp := Twitter1.DeleteTweet(ATweetId);
 ```
 
 ### CreateTweetWithContent
