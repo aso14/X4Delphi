@@ -1,6 +1,6 @@
 # X4Delphi Component v 1.1.0
 
-## Help Improve Our X4Delphi Component!
+### Sponsorship
 
 Dear Delphi Community,
 
