@@ -1,5 +1,18 @@
 # X4Delphi Component v 1.1.0
 
+# Help Improve Our X4Delphi Component!
+
+Dear Delphi Community,
+
+We're on a mission to enhance our Open Source X4Delphi Component and need your help! To take our component to the next level, we require **Basic access** to the Twitter API for development purposes.
+
+Your support is essential to us!
+
+**How You Can Help:**
+- [Make a donation](https://paypal.me/testmgs) to support our cause.
+- Your contribution matters, whether it's feedback, testing, or code contributions.
+
+Thank you for supporting the growth and improvement of X4Delphi!
 
 Telegram Group : https://t.me/x4delphi
 
