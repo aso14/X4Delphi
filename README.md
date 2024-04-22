@@ -14,7 +14,7 @@ Your support is essential to us!
 
 Thank you for supporting the growth and improvement of X4Delphi!
 
-![](https://geps.dev/progress/96)
+![](https://geps.dev/progress/4.5)
 
 | Sponsor   |
 |---------------|
