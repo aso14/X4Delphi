@@ -16,7 +16,6 @@
   *                                                                             *
   *                                                                             *
   *******************************************************************************}
-
 unit Twitter.Core;
 
 interface
@@ -27,16 +26,13 @@ uses
   System.DateUtils,IdGlobal, IdCoderMIME, System.Hash, REST.Json,
   Twitter.Api.Types,System.Rtti;
 
-
 procedure CloseTwitterClient;
+function URLEncode(source: string): string;
+function URLContains(const URL: string): Boolean;
 
-function  URLEncode(source:string):string;
-function  URLContains(const URL: string): Boolean;
-
-
-function DELETE(AUrl:String): Boolean;
-function POST(AMethod:String; AUrl:String; AParams:TStringStream;AHeadParams:TStringList=nil): String;
-function POST_FILE(AUrl:String; AMethod: String; AParams:TMultipartFormData):String;
+function HTTPDelete(AUrl:String): Boolean;
+function HTTPPost(method: string; URL: string; params: TStringStream; headers: TStringList = nil): string;
+function HTTPPostFile(URL: string; params: TMultipartFormData; QueryParams: string =''; headers: TStringList = nil): string;
 
 var
   ClientBase    : TNetHTTPClient;
@@ -58,7 +54,6 @@ begin
       Result := Result + source[i];
   end;
  end;
-
 function GenerateNonce:string ;
 var
   RandomData: TBytes;
@@ -77,7 +72,6 @@ begin
        Result := Result + Base64String[I];
   end;
 end;
-
 function CollectParams(AParams:TStringList):string;
 begin
   for var I:= 0 to AParams.Count-1 do
@@ -87,7 +81,6 @@ begin
     if (I<AParams.Count-1) then  Result:=Result+'&';
   end;
 end;
-
 function BuildHeader(AParams:TStringList):string;
 begin
   Result := Result + 'OAuth ';
@@ -98,18 +91,14 @@ begin
       if (I<AParams.Count-1) then  Result:=Result+' ,';
     end;
 end;
-
 function TwitterOAuth1(AURL, AMethod: string;AParams: TStringList=nil): Boolean;
 var
   OAuthParam: TStringList;
 begin
-  Result := False;
   try
     AMethod := UpperCase(AMethod);
-
     // Initialize OAuth parameter list
     OAuthParam := TStringList.Create;
-
     try
       OAuthParam.Values['oauth_consumer_key']     := User._ConsumerKey;
       OAuthParam.Values['oauth_token']            := User._AccessToken;
@@ -119,40 +108,30 @@ begin
       OAuthParam.Values['oauth_version']          := '1.0';
       if (AParams<>nil) then OAuthParam.AddStrings(AParams);
       OAuthParam.Sort;
-
       // Collect Parameters
       var tmpParms := TStringList.Create;
       try
         tmpParms.AddStrings(OAuthParam);
-
         for var I := 0 to tmpParms.Count - 1 do
         tmpParms.ValueFromIndex[I] := URLEncode(tmpParms.ValueFromIndex[I]);
         tmpParms.Sort;
-
         var ParamString := CollectParams(tmpParms);
-
         // Creating the signature base string
         var SignatureBaseString := Format('%s&%s&%s',
           [AMethod, URLEncode(AURL), URLEncode(ParamString)]);
-
         // Getting a signing key
         var SignatureKey := Format('%s&%s', [URLEncode(User._ConsumerSecret), URLEncode(User._TokenSecret)]);
-
         // Calculating the signature
         var tmpSignature := THashSHA1.GetHMACAsBytes(SignatureBaseString, SignatureKey);
         var Signature    := TNetEncoding.Base64.EncodeBytesToString(tmpSignature);
-
         // Add oauth_signature to parameters
         OAuthParam.Values['oauth_signature'] := Signature;
         OAuthParam.Sort;
-
         // Build OAuth Header
         var Header := BuildHeader(OAuthParam);
 
-
         // Add the new header to ClientBase
         ClientBase.CustHeaders.Add('Authorization', Header);
-
         Result := True; // Mark operation as successful
       finally
         tmpParms.Free;
@@ -169,19 +148,17 @@ begin
   end;
 end;
 
-
 procedure CloseTwitterClient;
 begin
   FreeAndNil(ClientBase);
 end;
 
-
-function POST(AMethod:String;AUrl:String;AParams:TStringStream;AHeadParams:TStringList=nil): String;
+function HTTPPost(method: string; URL: string; params: TStringStream; headers: TStringList = nil): string;
 begin
-   Result := EmptyStr;
-   TwitterOAuth1(AUrl, AMethod,AHeadParams);
+   Result := '';
+   TwitterOAuth1(URL, method,headers);
    try
-    Result := ClientBase.Post(AUrl,AParams).ContentAsString(TEncoding.UTF8);
+    Result := ClientBase.Post(URL,params).ContentAsString(TEncoding.UTF8);
    except
      on E : ENetHTTPClientException do
       begin
@@ -190,13 +167,16 @@ begin
    end;
 end;
 
-function POST_FILE(AUrl:String; AMethod: String; AParams:TMultipartFormData):String;
+function HTTPPostFile(URL: string; params: TMultipartFormData; QueryParams: string =''; headers: TStringList = nil): string;
+var
+  LFinalURL :string;
 begin
    Result := '';
    ClientBase.ContentType := 'multipart/form-data';
-   TwitterOAuth1(AURL,AMethod);
+   TwitterOAuth1(URL,'POST',headers);
    try
-    Result := ClientBase.Post(AUrl,AParams).ContentAsString(TEncoding.UTF8);
+    LFinalURL :=  URL + QueryParams;
+    Result := ClientBase.Post(LFinalURL,params).ContentAsString(TEncoding.UTF8);
    except
      on E : ENetHTTPClientException do
       begin
@@ -206,7 +186,7 @@ begin
    ClientBase.ContentType := 'application/json';
 end;
 
-function DELETE(AUrl:String):Boolean;
+function HTTPDelete(AUrl:String):Boolean;
 begin
    Result := false;
    try
@@ -214,9 +194,7 @@ begin
     var tmp  := ClientBase.Delete(AUrl).ContentAsString(TEncoding.UTF8);
     var LObj := TJSON.JsonToObject<TTweetRespDeleted>
     (tmp,[joIgnoreEmptyArrays,joIgnoreEmptyStrings]);
-
     if LObj.data.deleted then result := True;
-
    except
      on E : ENetHTTPClientException do
       begin
@@ -225,14 +203,12 @@ begin
    end;
 end;
 
-
 function URLContains(const URL: string): Boolean;
 begin
-  Result := Pos('denied=', URL) > 0;
+  Result := Pos('denied=',URL) > 0;
 end;
 
 initialization
   ClientBase := TNetHTTPClient.Create(nil);
   ClientBase.ContentType  := 'x-www-form-urlencoded';
 end.
-

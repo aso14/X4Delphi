@@ -16,25 +16,45 @@
   *                                                                             *
   *                                                                             *
   *******************************************************************************}
-
 unit Twitter.Api.Types;
 
 interface
-uses
-  System.Generics.Collections;
 
-const
-  LUrlAuth     = 'https://api.twitter.com/oauth/request_token';
-  LRedirect    = 'https://api.twitter.com/oauth/authorize';
-  LUrl         = 'https://api.twitter.com/2/tweets';
-  LUrlM        = 'https://upload.twitter.com/1.1/media/upload.json';
-  LCallBackURI = 'http://localhost:3000/auth/twitter/callback';
-  LtmpUrl      = 'https://api.twitter.com/oauth/access_token';
-  ADefault     = 3000;
+uses
+  System.Generics.Collections, System.SysUtils;
+
+  const
+
+  {$REGION 'Twitter Commands'}
+    C_INIT       = 'INIT';
+    C_APPEND     = 'APPEND';
+    C_FINALIZE   = 'FINALIZE';
+  {$ENDREGION}
+
+  {$REGION 'Links'}
+    CUrlAuth     = 'https://api.twitter.com/oauth/request_token';
+    CRedirect    = 'https://api.twitter.com/oauth/authorize';
+    CUrl         = 'https://api.twitter.com/2/tweets';
+    CUrlMedia    = 'https://upload.twitter.com/1.1/media/upload.json';
+    CCallBackURI = 'http://localhost:3000/auth/twitter/callback';
+    CTmpUrl      = 'https://api.twitter.com/oauth/access_token';
+  {$ENDREGION}
+
+  CDefaultPort = 3000;
 
 type
 
 {Standard v1.1}
+
+ TwitterMediaType = (VideoMP4,ImagePNG,ImageGIF);
+ EventFlag = (EvTweet,EvWithTweet);
+
+ ETwitter = class(Exception)
+  private
+    FStatus : Integer;
+  public
+    property Status : Integer read FStatus write FStatus;
+ end;
 
 TCoordinates = record
   Longitude: Double;
@@ -53,6 +73,7 @@ TTwitterSize = class
 end;
 
 {Media Object}
+
 TTwitterMedia = class
   private
     Fdisplay_url: string;
@@ -138,22 +159,6 @@ TTwitterSymbol = class
     property text: string read Ftext write Ftext;
 end;
 
-//TTwitterOption = class
-//  private
-//  cc
-//end;
-
-//TTwitterPoll = class
-//  private
-//    Foptions: TArray<TTwitterOption>;
-//    Fend_datetime: string;
-//    Fduration_minutes: string;
-//  public
-//    property options: TArray<TTwitterOption> read Foptions write Foptions;
-//    property end_datetime: string read Fend_datetime write Fend_datetime;
-//    property duration_minutes: string read Fduration_minutes write Fduration_minutes;
-//end;
-
 {Hashtag Object}
 TTwitterHashtag = class
   private
@@ -178,16 +183,13 @@ TTwitterEntities = class
     Furls: TArray<TTwitterUrl>;
     Fuser_mentions: TArray<TTwitterUserMention>;
     Fsymbols: TArray<TTwitterSymbol>;
-//    Fpolls: TArray<TTwitterPoll>;
   public
     property hashtags: TArray<TTwitterHashtag> read Fhashtags write Fhashtags;
     property media: TArray<TTwitterMedia> read Fmedia write Fmedia;
     property urls: TArray<TTwitterUrl> read Furls write Furls;
     property user_mentions: TArray<TTwitterUserMention> read Fuser_mentions write Fuser_mentions;
     property symbols: TArray<TTwitterSymbol> read Fsymbols write Fsymbols;
-//    property polls: TArray<TTwitterPoll> read Fpolls write Fpolls;
 end;
-
 
 TTwitterCoordinates = class
   private
@@ -230,11 +232,6 @@ TTwitterPlace = class
     property attributes: TObject read Fattributes write Fattributes;
 end;
 
-//TTwitterEnrichment = class
-//  private
-//  Flocactions : TArray<
-//end;
-
 TTwitterUser = class
   private
     Fid: Int64;
@@ -242,7 +239,6 @@ TTwitterUser = class
     Fname: string;
     Fscreen_name: string;
     Flocation: string;
-//    Fderived: TArray<TTwitterEnrichment>;
     Furl: string;
     Fdescription: string;
     Fprotected: Boolean;
@@ -265,7 +261,6 @@ TTwitterUser = class
     property name: string read Fname write Fname;
     property screen_name: string read Fscreen_name write Fscreen_name;
     property location: string read Flocation write Flocation;
-//    property derived: TArray<TTwitterEnrichment> read Fderived write Fderived;
     property url: string read Furl write Furl;
     property description: string read Fdescription write Fdescription;
     property protected: Boolean read Fprotected write Fprotected;
@@ -419,19 +414,41 @@ TTwitterImageInfo = class
     property h: Integer read Fh write Fh;
   end;
 
+  TTwitterVideoInfo = class
+  private
+    Fvideo_type: string;
+  public
+    property video_type: string read Fvideo_type write Fvideo_type;
+  end;
+
+  TTwitterProcessInfo = class
+  private
+    Fstate: string;
+    Fprogress_percent: Integer;
+  public
+    property state: string read Fstate write Fstate;
+    property progress_percent: Integer read Fprogress_percent write Fprogress_percent;
+  end;
+
   TTwitterMediaInfo = class
   private
     Fmedia_id: Int64;
     Fmedia_id_string: string;
     Fsize: Integer;
     Fexpires_after_secs: Integer;
+    Fmedia_key : string;
     Fimage: TTwitterImageInfo;
+    Fvideo: TTwitterVideoInfo;
+    Fprocessing_info : TTwitterProcessInfo;
   public
     property media_id: Int64 read Fmedia_id write Fmedia_id;
     property media_id_string: string read Fmedia_id_string write Fmedia_id_string;
     property size: Integer read Fsize write Fsize;
     property expires_after_secs: Integer read Fexpires_after_secs write Fexpires_after_secs;
+    property media_key : string read Fmedia_key write Fmedia_key;
     property image: TTwitterImageInfo read Fimage write Fimage;
+    property video: TTwitterVideoInfo read Fvideo write Fvideo;
+    property processing_info : TTwitterProcessInfo read Fprocessing_info write Fprocessing_info;
   end;
 
  TTweetData = class
@@ -483,6 +500,25 @@ TTwitterImageInfo = class
    _ScreenName    : string;
   end;
 
+
+
+
+
+ TTwitterCrResult =  record
+    ErrorReturn : ETwitter;
+    xResult : TTweetResponse;
+  end;
+
+  EDuplicatedError = class(ETwitter);
+  EInvalidOrExpiredToken = class(ETwitter);
+  EUnauthorized = class(ETwitter);
+  ETooManyRequests = class(ETwitter);
+  EUnknownError = class(ETwitter);
+  EFileSizeMismatch = class(ETwitter);
+  EMediaUnrecognized = class (ETwitter);
+
+
 implementation
+
 
 end.
