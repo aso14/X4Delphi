@@ -230,7 +230,7 @@ end;
 
 destructor TTwitter.Destroy;
 begin
-  if Assigned(FCallBack) then FCallBack.Free;
+  if Assigned(FCallBack) then FCallBack.DisposeOf;
   CloseTwitterClient;
   inherited;
 end;
@@ -635,7 +635,7 @@ begin
 
    LPath := Format('?command=%s&media_id=%s&segment_index=%d',[C_APPEND, LObj.media_id_string, 0]);
    LResponse := HTTPPostFile(CUrlMedia, LParams, LPath, LQuery);
-   LParams.Free;
+   LParams.DisposeOf;
 
    LQuery.Clear;
    LQuery.AddPair('command', C_FINALIZE);
@@ -669,8 +669,8 @@ begin
   {$ENDREGION}
 
   finally
-    LQuery.Free;
-    LParams.Free;
+    LQuery.DisposeOf;
+    LParams.DisposeOf;
   end;
 
 end;
