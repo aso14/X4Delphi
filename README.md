@@ -1,5 +1,27 @@
 # X4Delphi Component v 1.1.0
 
+## Sponsorship
+
+Dear Delphi Community,
+
+We're on a mission to enhance our Open Source X4Delphi Component and need your help! To take our component to the next level, we require **Basic access** to the Twitter API for development purposes.
+
+Your support is essential to us!
+
+**How You Can Help:**
+- [Make a donation](https://paypal.me/testmgs) to support our cause.
+- Your contribution matters, whether it's feedback, testing, or code contributions.
+
+Thank you for supporting the growth and improvement of X4Delphi!
+
+![](https://geps.dev/progress/5)
+
+| Sponsor   |
+|---------------|
+| Weather Display   |
+
+
+
 
 Telegram Group : https://t.me/x4delphi
 
@@ -40,7 +62,7 @@ To use this component in your Delphi project, follow these steps:
 | Procedure / Function                   | Description                                          | Example Usage
 |-----------------------------|------------------------------------------------------|--------------
 | **CreateTweet**                   | This procedure allows you to create a tweet on Twitter. Simply provide the text you want to tweet, and it returns a response through **OnAuthenticated** Event containing relevant information about the tweet. | `Twitter1.CreateTweet('Hello, Twitter!');`
-| **DeleteTweet**                  | With this function, you can delete a tweet from Twitter by providing its ID (AId). It returns a response object (TTweetRespDeleted) indicating the success or failure of the deletion operation.| ` Resp := Twitter1.DeleteTweet(TweetId);`
+| **DeleteTweet**                  | With this function, you can delete a tweet from Twitter by providing its ID (AId). It returns a boolean as response to indicating the success or failure of the deletion operation.| ` Resp := Twitter1.DeleteTweet(TweetId);`
 | **CreateTweetWithContent**             | This procedure enables you to create a tweet with both text and media content (such as images or videos). | `Twitter1.CreateTweetWithContent('AText','Images_videos_path');`
 | **SignIn**             | This procedure enables you to use Log in with Twitter based on OAuth | `Twitter1.SignIn;`
 
@@ -98,6 +120,11 @@ begin
  // Write your code here.....
 end;
 ```
+
+## Tutorial 
+
+
+[![](https://img.youtube.com/vi/mty8Fkn3jqs/0.jpg)](https://www.youtube.com/watch?v=mty8Fkn3jqs)
 
 ## License
 This library is released under the [MIT License](LICENSE).
