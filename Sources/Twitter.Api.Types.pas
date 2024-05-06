@@ -500,10 +500,6 @@ TTwitterImageInfo = class
    _ScreenName    : string;
   end;
 
-
-
-
-
  TTwitterCrResult =  record
     ErrorReturn : ETwitter;
     xResult : TTweetResponse;
