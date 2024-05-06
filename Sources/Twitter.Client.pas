@@ -592,6 +592,7 @@ var
   LParams: TMultipartFormData;
   LResponse: string;
   LObj: TTwitterMediaInfo;
+  LCount: Integer;
 begin
    Result := nil;
   {$REGION 'Initialization'}
@@ -608,7 +609,6 @@ begin
      RaiseSpecialError('',14,EvWithTweet);
      Exit;
    end;
-
   {$ENDREGION}
 
   {$REGION 'Uploading < 5MB'}
@@ -653,12 +653,19 @@ begin
     Exit;
    end;
 
-   repeat
+  for LCount := 1 to CLimit_wait do
+  begin
     LResponse := HTTPPostFile(CUrlMedia, LParams, LPath, LQuery);
-   until WaitForStatus (LResponse) ;
+    if WaitForStatus(LResponse) then break;
+  end;
+
+  if (LCount>=CLimit_wait)  then
+  begin
+    RaiseSpecialError('',14,EvWithTweet);
+    Exit;
+  end;
 
    Result := TJSON.JsonToObject<TTwitterMediaInfo>(LResponse, [joIgnoreEmptyArrays, joIgnoreEmptyStrings]);
-
   {$ENDREGION}
 
   finally
@@ -671,7 +678,7 @@ end;
 function TTwitter.WaitForStatus(AJsonText : string): Boolean;
 var
   LObj: TJSONObject;
-  LProcess: TJSONObject;
+  LProcess, LImage: TJSONObject;
   LStateValue: string;
 begin
   Result := false;
@@ -690,6 +697,11 @@ begin
             end;
           end;
           Sleep(1000);
+      end;
+      if LObj.TryGetValue<TJSONObject>('image', LImage) then
+      begin
+      Result := True;
+      Exit;
       end;
     end;
   finally

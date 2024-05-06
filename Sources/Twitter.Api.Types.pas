@@ -41,6 +41,7 @@ uses
   {$ENDREGION}
 
   CDefaultPort = 3000;
+  CLimit_wait = 9;
 
 type
 
@@ -499,10 +500,6 @@ TTwitterImageInfo = class
    _UserID        : string;
    _ScreenName    : string;
   end;
-
-
-
-
 
  TTwitterCrResult =  record
     ErrorReturn : ETwitter;
